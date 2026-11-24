@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="uz" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236366f1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z'/><path d='M3 6h18'/><path d='M16 10a4 4 0 0 1-8 0'/></svg>" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AuraMarket AI — Mini Marketplace + Sun'iy Intellekt</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+      #file-protocol-launcher {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 9999999;
+        background: radial-gradient(circle at 50% 20%, #1e1338 0%, #0b0f19 80%);
+        color: #f1f5f9;
+        font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+        padding: 20px;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+      }
+      .launcher-card {
+        max-width: 500px;
+        width: 100%;
+        background: rgba(17, 24, 39, 0.95);
+        border: 2px solid rgba(112, 0, 255, 0.4);
+        border-radius: 28px;
+        padding: 36px 30px;
+        box-shadow: 0 30px 70px -15px rgba(0, 0, 0, 0.8), 0 0 50px rgba(112, 0, 255, 0.2);
+        text-align: center;
+        backdrop-filter: blur(24px);
+      }
+      .launcher-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 14px;
+        background: rgba(112, 0, 255, 0.18);
+        border: 1px solid rgba(112, 0, 255, 0.5);
+        color: #c084fc;
+        border-radius: 999px;
+        font-size: 11px;
+        font-weight: 800;
+        text-transform: uppercase;
+        margin-bottom: 16px;
+      }
+      .launcher-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding: 16px 24px;
+        margin-top: 20px;
+        border-radius: 18px;
+        background: linear-gradient(135deg, #7000FF 0%, #4f46e5 100%);
+        color: #ffffff !important;
+        font-weight: 800;
+        font-size: 15px;
+        text-decoration: none;
+        box-shadow: 0 12px 28px -5px rgba(112, 0, 255, 0.5);
+        transition: all 0.25s;
+        box-sizing: border-box;
+      }
+      .launcher-btn:hover {
+        transform: translateY(-2px);
+      }
+      .pulse-dot {
+        width: 8px;
+        height: 8px;
+        background: #10b981;
+        border-radius: 50%;
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body class="bg-slate-50 dark:bg-[#0b0f19] text-slate-900 dark:text-slate-100 antialiased selection:bg-brand-500 selection:text-white min-h-screen">
+    
+    <div id="file-protocol-launcher">
+      <div class="launcher-card">
+        <div class="launcher-badge">
+          <span class="pulse-dot"></span>
+          <span>AuraMarket AI</span>
+        </div>
+        
+        <h1 style="font-size: 22px; font-weight: 900; margin: 0 0 10px 0; color: #ffffff;">
+          Sayt Ishga Tushirilmoqda...
+        </h1>
+        
+        <p style="font-size: 13px; color: #94a3b8; line-height: 1.6; margin: 0;">
+          Server tekshirilmoqda. Agar sayt ochilmasa, loyiha papkasidagi <b>ISHGA_TUSHIRISH.bat</b> faylini bosing.
+        </p>
+
+        <a href="http://localhost:5000" id="goto-site-btn" class="launcher-btn">
+          🚀 Saytga Kirish: http://localhost:5000
+        </a>
+      </div>
+    </div>
+
+    <script>
+      if (window.location.protocol === 'file:') {
+        var launcher = document.getElementById('file-protocol-launcher');
+        if (launcher) launcher.style.display = 'flex';
+
+        function checkAndGo() {
+          fetch('http://localhost:5000/api/health')
+            .then(function(res) {
+              if (res.ok) {
+                window.location.replace('http://localhost:5000');
+              }
+            })
+            .catch(function() {
+              setTimeout(checkAndGo, 1500);
+            });
+        }
+        checkAndGo();
+      }
+    </script>
+
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
